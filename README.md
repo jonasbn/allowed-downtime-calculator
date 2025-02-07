@@ -17,7 +17,7 @@ These are the percentages I have based my calculations on:
 - `99.9999%` (6 nines), ambitious
 - `99.99999%` (7 nines), which should is somewhat the same as 100% uptime
 
-# Allowed Downtime Matrix
+### Allowed Downtime Matrix
 
 This I have based on the numbers from the [LinkedIn post][LINKEDIN] and the numbers copied from [uptime.is][UPTIMEIS] and finally my own calculations from this implementation.
 
@@ -155,8 +155,6 @@ go run cmd/main.go [options]
 As mentioned earlier, the implementation supports handling of leap years, so you can provide any year you want and get the proper calculation.
 
 Since there are only two outcomes and you are unsure or just want a regular year `2025` was a regular year and `2024` was a leap year.
-
-```bash
 
 ## Resources and References
 
