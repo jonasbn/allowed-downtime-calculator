@@ -151,6 +151,7 @@ go run cmd/main.go [options]
 ### Options
 
 - `year`: The year for which you want to calculate the allowed downtime. Defaults to current year.
+- `debug`: Enable debug mode to print additional information (currently very limited).
 
 As mentioned earlier, the implementation supports handling of leap years, so you can provide any year you want and get the proper calculation.
 
