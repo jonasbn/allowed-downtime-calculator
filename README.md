@@ -157,6 +157,26 @@ As mentioned earlier, the implementation supports handling of leap years, so you
 
 Since there are only two outcomes and you are unsure or just want a regular year `2025` was a regular year and `2024` was a leap year.
 
+### Parameters
+
+In addition to the options, you can also provide data as parameters to the CLI application:
+
+```bash
+go run cmd/main.go 0 50 100
+```
+
+Do note parameters can be provided as integers or floats.
+
+### Diagnostics
+
+#### invalid parameter type
+
+If a provided parameter cannot be converted to a float for use in the calculations, the application will print an error message and fallback to the defaults.
+
+#### invalid parameter value
+
+If a provided parameter is not representing a percentile between `0` and `100`, the application print an error message and fallback to the defaults.
+
 ## Resources and References
 
 - [Post from LinkedIn][LINKEDIN]

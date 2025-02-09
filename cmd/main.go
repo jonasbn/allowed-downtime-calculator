@@ -16,6 +16,8 @@ func main() {
 	debug := flag.Bool("debug", false, "generate debug output")
 	flag.Parse()
 
+	args := flag.Args()
+
 	// Execute the CLI logic
-	cli.Run(*year, *debug)
+	cli.Run(*year, *debug, args)
 }
