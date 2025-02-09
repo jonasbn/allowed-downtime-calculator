@@ -18,7 +18,7 @@ type Downtime struct {
 	Seconds float64
 }
 
-func Run(year int) {
+func Run(year int, debug bool) {
 
 	var number_of_days float64
 
@@ -35,12 +35,21 @@ func Run(year int) {
 	fmt.Printf("Calculated allowed downtime for uptime requirement in year: %d (%f days):\n", year, number_of_days)
 	for _, uptime := range uptimes {
 		downtime := calculate_uptime(uptime, total_seconds_in_a_year)
-		fmt.Printf("\t%f%% is: %d days %d hours %d minutes %d seconds\n",
-			uptime,
-			int(downtime.Days),
-			int(downtime.Hours),
-			int(downtime.Minutes),
-			int(downtime.Seconds))
+		if !debug {
+			fmt.Printf("\t%f%% is: %d days %d hours %d minutes %d seconds\n",
+				uptime,
+				int(downtime.Days),
+				int(downtime.Hours),
+				int(downtime.Minutes),
+				int(downtime.Seconds))
+		} else {
+			fmt.Printf("\t%f%% is: %f days %f hours %f minutes %f seconds\n",
+				uptime,
+				downtime.Days,
+				downtime.Hours,
+				downtime.Minutes,
+				downtime.Seconds)
+		}
 	}
 }
 
