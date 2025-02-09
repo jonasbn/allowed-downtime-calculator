@@ -43,9 +43,12 @@ func Run(year int, debug bool, args []string) {
 
 	uptimes, err := validateArgs(args)
 
+	if len(uptimes) == 0 {
+		uptimes = default_uptimes
+	}
+
 	if err != nil {
 		fmt.Printf("Error: %s\n\tContinuing with the known defaults %v\n\n", err, default_uptimes)
-		uptimes = default_uptimes
 	}
 
 	var number_of_days float64
