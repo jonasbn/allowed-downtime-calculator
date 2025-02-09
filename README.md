@@ -157,6 +157,14 @@ As mentioned earlier, the implementation supports handling of leap years, so you
 
 Since there are only two outcomes and you are unsure or just want a regular year `2025` was a regular year and `2024` was a leap year.
 
+### Parameters
+
+In addition to the options, you can also provide data as parameters to the CLI application:
+
+```bash
+go run cmd/main.go 0 50 100
+```
+
 ## Resources and References
 
 - [Post from LinkedIn][LINKEDIN]

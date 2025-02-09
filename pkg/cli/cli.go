@@ -3,6 +3,7 @@ package cli
 import (
 	"fmt"
 	"math"
+	"strconv"
 )
 
 const (
@@ -18,7 +19,34 @@ type Downtime struct {
 	Seconds float64
 }
 
-func Run(year int, debug bool) {
+func validateArgs(args []string) ([]float64, error) {
+
+	var percentiles []float64
+
+	for _, arg := range args {
+		uptime, err := strconv.ParseFloat(arg, 64)
+		if err != nil {
+			return nil, fmt.Errorf("invalid parameter type: %s", arg)
+		}
+		if uptime < 0 || uptime > 100 {
+			return nil, fmt.Errorf("invalid parameter value: %s", arg)
+		}
+		percentiles = append(percentiles, uptime)
+	}
+
+	return percentiles, nil
+}
+
+func Run(year int, debug bool, args []string) {
+
+	var default_uptimes = []float64{99.0, 99.9, 99.99, 99.999, 99.9999, 99.99999}
+
+	uptimes, err := validateArgs(args)
+
+	if err != nil {
+		fmt.Printf("Error: %s\n\tContinuing with the known defaults %v\n\n", err, default_uptimes)
+		uptimes = default_uptimes
+	}
 
 	var number_of_days float64
 
@@ -29,8 +57,6 @@ func Run(year int, debug bool) {
 	}
 
 	var total_seconds_in_a_year = number_of_days * HoursInDay * MinutesInHour * SecondsInMinute
-
-	var uptimes = []float64{1.0, 50.0, 99.0, 99.9, 99.99, 99.999, 99.9999, 99.99999}
 
 	fmt.Printf("Calculated allowed downtime for uptime requirement in year: %d (%f days):\n", year, number_of_days)
 	for _, uptime := range uptimes {
