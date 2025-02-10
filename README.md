@@ -184,6 +184,14 @@ If a provided parameter cannot be converted to a float for use in the calculatio
 
 If a provided parameter is not representing a percentile between `0` and `100`, the application print an error message and fallback to the defaults.
 
+## Testing
+
+To run the tests for the CLI application, use the following command:
+
+```bash
+go test -v ./pkg/cli
+```
+
 ## Resources and References
 
 - [Post from LinkedIn][LINKEDIN]
