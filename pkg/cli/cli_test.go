@@ -6,6 +6,7 @@ import (
 )
 
 func TestCalculateUptime(t *testing.T) {
+
 	tests := []struct {
 		uptime              float64
 		totalSecondsInAYear float64
