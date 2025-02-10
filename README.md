@@ -146,6 +146,13 @@ To run the CLI application, use the following command:
 
 ```bash
 go run cmd/main.go [options]
+Calculated allowed downtime for uptime requirement in year: 2025 (365.000000 days):
+        99.000000% is: 3 days 15 hours 36 minutes 0 seconds
+        99.900000% is: 0 days 8 hours 45 minutes 35 seconds
+        99.990000% is: 0 days 0 hours 52 minutes 33 seconds
+        99.999000% is: 0 days 0 hours 5 minutes 15 seconds
+        99.999900% is: 0 days 0 hours 0 minutes 31 seconds
+        99.999990% is: 0 days 0 hours 0 minutes 3 seconds
 ```
 
 ### Options
