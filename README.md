@@ -130,8 +130,8 @@ As you can read from the table above, the difference is not that big, but it is 
 To install the CLI application, clone the repository and navigate to the project directory:
 
 ```bash
-git clone <repository-url>
-cd my-cli-app
+git clone git@github.com:jonasbn/allowed-downtime-calculator.git
+cd allowed-downtime-calculator
 ```
 
 Then, run the following command to install the required dependencies:
