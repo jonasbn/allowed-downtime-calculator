@@ -222,6 +222,9 @@ go test -v ./pkg/cli
 - [Post from LinkedIn][LINKEDIN]
 - [uptime.is][UPTIMEIS]
 - [Wikipedia: "Year"][WIKIPEDIA]
+- [Wikipedia: "Tropical year"][TROPICAL]
+- [Wikipedia: "Common year"][COMMON]
+- [Wikipedia: "Leap year"][LEAP]
 - [SibeNotes: "How many seconds are in a year?"][SIBE]
 
 ## Contributing
@@ -238,3 +241,4 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 [SIBE]: https://sibenotes.com/maths/how-many-seconds-are-in-a-year/
 [TROPICAL]: https://en.wikipedia.org/wiki/Tropical_year
 [COMMON]: https://en.wikipedia.org/wiki/Common_year
+[LEAP]: https://en.wikipedia.org/wiki/Leap_year
