@@ -37,7 +37,7 @@ func validateArgs(args []string) ([]float64, error) {
 	return percentiles, nil
 }
 
-func Run(year int, debug bool, args []string) {
+func Run(year int, calendar string, debug bool, args []string) {
 
 	var default_uptimes = []float64{99.0, 99.9, 99.99, 99.999, 99.9999, 99.99999}
 
@@ -53,15 +53,22 @@ func Run(year int, debug bool, args []string) {
 
 	var number_of_days float64
 
+	if calendar == "common" {
+		number_of_days = 365.0
+	} else if calendar == "tropical" {
+		number_of_days = 365.2422
+	} else { // gregorian
+		number_of_days = 365.2425
+	}
+
 	if isLeapYear(year) {
 		number_of_days = 366.0
-	} else {
-		number_of_days = 365.0
 	}
 
 	var total_seconds_in_a_year = number_of_days * HoursInDay * MinutesInHour * SecondsInMinute
 
-	fmt.Printf("Calculated allowed downtime for uptime requirement in year: %d (%f days):\n", year, number_of_days)
+	fmt.Printf("Calculated allowed downtime for uptime requirement in year: %d (%f days)\nas per %s year length\n", year, number_of_days, calendar)
+
 	for _, uptime := range uptimes {
 		downtime := calculate_uptime(uptime, total_seconds_in_a_year)
 		if !debug {

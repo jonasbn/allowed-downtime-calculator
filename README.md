@@ -4,9 +4,30 @@
 
 I read a LinkedIn post on the subject and I wanted to implement this in Go, just for the fun of it.
 
-In retrospect I should never have started, since descrepancies occurred between my implementation and the other sources.
+In retrospect I should never have started, since descrepancies occurred between my implementation and the other sources. I outlined this in this [blog post](https://dev.to/jonasbn/title-calculating-allowed-downtime-for-human-consumption-99-to-9999999-availability-3aid).
 
-My implementation calculates the allowed downtime for a given year based on the a range of uptime percentages for easy human consumption.
+The other day by accident I found out that there are various lengths to a year based on the definition of a year. I had implemented handling of leap years in my implementation, but there are two year definitions that I had not taken into account.
+
+- tropical year of approx. `365.2425` days
+- common year of `365` days
+
+I found a nice explanation on [Wikipedia](https://en.wikipedia.org/wiki/Year) and I have updated my implementation to handle this. I also found another [article][SIBE] explaining the difference between a calculated year (calculated) and the the actual year length based on earts revolution around the sun.
+
+A common year is:
+
+```text
+24 hours/day * 60 minutes/hour * 60 seconds/minute * 365 days/year = 31,536,000 seconds/year
+```
+
+This is the Gregorian calendar year length (common year), but the actual year length (tropical) is:
+
+```text
+24 hours/day * 60 minutes/hour * 60 seconds/minute * 365.2425 days/year = 31,556,952 seconds/year
+```
+
+My implementation calculates the allowed downtime for a given year based on the a range of uptime percentages for easy human consumption based on a gregorian calendar, which is the default and similar to tropical year length for the calculations in this implementation.
+
+You can specify a calendar using: `--calendar`, the default however is the gregorian year length. The [post from LinkedIn][LINKEDIN] was based on the gregorian/tropical year length, which explains my initial descrepancies (and confusion), since my first implementation was based on the common year length.
 
 These are the percentages I have based my calculations on:
 
@@ -19,67 +40,66 @@ These are the percentages I have based my calculations on:
 
 ### Allowed Downtime Matrix
 
-This I have based on the numbers from the [LinkedIn post][LINKEDIN] and the numbers copied from [uptime.is][UPTIMEIS] and finally my own calculations from this implementation.
+This I have based on the numbers from:
+
+- [LinkedIn post][LINKEDIN], which is based on the gregorian or tropcial year length
+- [uptime.is][UPTIMEIS] _source of calculation unknown to me_
+- and finally my own initial calculations from this implementations which is a common year
+- and the updated implementation which can handle both common and tropical year lengths
 
 ## 99% Availability: Calculated allowed downtime
 
-Here we all really disagree
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `3`  | `15`  | `39`    | `29`    |
+| gregorian | `3`  | `15`  | `39`    | `29`    |
 | uptime.is | `3`  | `14`  | `56`    | `18`    |
-| _mine_    | `3`  | `15`  | `36`    | `0`     |
+| common    | `3`  | `15`  | `36`    | `0`     |
+| tropical  | `3`  | `15`  | `39`    | `29`    |
 
 ## 99.9% Availability: Calculated allowed downtime
 
-Here we all disagree, but we are closer
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `0`  | `8`   | `45`    | `56`    |
+| gregorian | `0`  | `8`   | `45`    | `56`    |
 | uptime.is | `0`  | `8`   | `41`    | `38`    |
-| _mine_    | `0`  | `8`   | `45`    | `35`    |
+| common    | `0`  | `8`   | `45`    | `35`    |
+| tropical  | `0`  | `8`   | `45`    | `56`    |
 
 ## 99.99% Availability: Calculated allowed downtime
 
-Here we all disagree, but we are even closer
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `0`  | `0`   | `52`    | `35`    |
+| gregorian | `0`  | `0`   | `52`    | `35`    |
 | uptime.is | `0`  | `0`   | `52`    | `9.8`   |
-| _mine_    | `0`  | `0`   | `52`    | `33`    |
+| common    | `0`  | `0`   | `52`    | `33`    |
+| tropical  | `0`  | `0`   | `52`    | `35`    |
 
 ## 99.999% Availability: Calculated allowed downtime
 
-Linked post and I agree on this one, but not with uptime.is
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `0`  | `0`   | `5`     | `15`    |
+| gregorian | `0`  | `0`   | `5`     | `15`    |
 | uptime.is | `0`  | `0`   | `5`     | `13`    |
-| _mine_    | `0`  | `0`   | `5`     | `15`    |
+| common    | `0`  | `0`   | `5`     | `15`    |
+| tropical  | `0`  | `0`   | `5`     | `15`    |
 
 ## 99.9999% Availability: Calculated allowed downtime
 
-All is good
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `0`  | `0`   | `0`     | `31`    |
+| gregorian | `0`  | `0`   | `0`     | `31`    |
 | uptime.is | `0`  | `0`   | `0`     | `31`    |
-| _mine_    | `0`  | `0`   | `0`     | `31`    |
+| common    | `0`  | `0`   | `0`     | `31`    |
+| tropical  | `0`  | `0`   | `0`     | `31`    |
 
 ## 99.99999% Availability: Calculated allowed downtime
 
-Minor descrepancy where uptime.is has an extra 0.1 second
-
 | Source    | Days | Hours | Minutes | Seconds |
 |-----------|------|-------|---------|---------|
-| LinkedIn  | `0`  | `0`   | `0`     | `3`     |
+| gregorian | `0`  | `0`   | `0`     | `3`     |
 | uptime.is | `0`  | `0`   | `0`     | `3.1`   |
-| _mine_    | `0`  | `0`   | `0`     | `3`     |
+| common    | `0`  | `0`   | `0`     | `3`     |
+| tropical  | `0`  | `0`   | `0`     | `3`     |
 
 ## Implementation
 
@@ -93,13 +113,13 @@ In addition the implementation used the Go package: `math` and it's `Mod` functi
 
 ### Leap Years
 
-The implementation also suupports handling of leap years, since the number of days in a year is not a constant and it varies by a day.
+The implementation also supports handling of leap years for common years, since the number of days in a year is not a constant and it varies by a day.
 
 The leap year calculation is based on the Exercism exercise "leap" and my own solution to this exercise.:
 
 - [Exercism: "leap" exercise](https://exercism.org/tracks/go/exercises/leap)
 
-#### Regular Year vs Leap Year
+#### Regular Year vs Leap Year for the Common Year
 
 | Availability | Year       | Days | Hours | Minutes | Seconds |
 |--------------|------------|------|-------|---------|---------|
@@ -146,18 +166,23 @@ To run the CLI application, use the following command:
 
 ```bash
 go run cmd/main.go [options]
-Calculated allowed downtime for uptime requirement in year: 2025 (365.000000 days):
-        99.000000% is: 3 days 15 hours 36 minutes 0 seconds
-        99.900000% is: 0 days 8 hours 45 minutes 35 seconds
-        99.990000% is: 0 days 0 hours 52 minutes 33 seconds
-        99.999000% is: 0 days 0 hours 5 minutes 15 seconds
-        99.999900% is: 0 days 0 hours 0 minutes 31 seconds
-        99.999990% is: 0 days 0 hours 0 minutes 3 seconds
+Calculated allowed downtime for uptime requirement in year: 2025 (365.242500 days) as per gregorian year length:
+   99.000000% is: 3 days 15 hours 39 minutes 29 seconds
+   99.900000% is: 0 days 8 hours 45 minutes 56 seconds
+   99.990000% is: 0 days 0 hours 52 minutes 35 seconds
+   99.999000% is: 0 days 0 hours 5 minutes 15 seconds
+   99.999900% is: 0 days 0 hours 0 minutes 31 seconds
+   99.999990% is: 0 days 0 hours 0 minutes 3 seconds
 ```
 
 ### Options
 
 - `year`: The year for which you want to calculate the allowed downtime. Defaults to current year.
+- `calendar`:
+  - `common`: Use the common year length of: `365` days/year.
+  - `tropical`: Use the tropical year length of: `365,2422` days/year.
+  - `gregorian`: Use the gregorian calendar year length of: `365,2425` days/year.
+  - Defaults to `gregorian`
 - `debug`: Enable debug mode to print additional information (currently very limited).
 
 As mentioned earlier, the implementation supports handling of leap years, so you can provide any year you want and get the proper calculation.
@@ -196,6 +221,8 @@ go test -v ./pkg/cli
 
 - [Post from LinkedIn][LINKEDIN]
 - [uptime.is][UPTIMEIS]
+- [Wikipedia: "Year"][WIKIPEDIA]
+- [SibeNotes: "How many seconds are in a year?"][SIBE]
 
 ## Contributing
 
@@ -207,3 +234,7 @@ This project is licensed under the MIT License. See the LICENSE file for more de
 
 [LINKEDIN]: https://www.linkedin.com/feed/update/urn:li:activity:7286283676743540736/
 [UPTIMEIS]: https://uptime.is/
+[WIKIPEDIA]: https://en.wikipedia.org/wiki/Year
+[SIBE]: https://sibenotes.com/maths/how-many-seconds-are-in-a-year/
+[TROPICAL]: https://en.wikipedia.org/wiki/Tropical_year
+[COMMON]: https://en.wikipedia.org/wiki/Common_year
