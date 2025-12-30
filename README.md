@@ -4,14 +4,14 @@
 
 I read a LinkedIn post on the subject and I wanted to implement this in Go, just for the fun of it.
 
-In retrospect I should never have started, since descrepancies occurred between my implementation and the other sources. I outlined this in this [blog post](https://dev.to/jonasbn/title-calculating-allowed-downtime-for-human-consumption-99-to-9999999-availability-3aid).
+In retrospect I should never have started, since descrepancies occurred between my implementation and the other sources. I outlined this in a [blog post](https://dev.to/jonasbn/title-calculating-allowed-downtime-for-human-consumption-99-to-9999999-availability-3aid).
 
-The other day by accident I found out that there are various lengths to a year based on the definition of a year. I had implemented handling of leap years in my implementation, but there are two year definitions that I had not taken into account.
+The other day, I found out by accident that there are various lengths to a year based on the definition of a year. I had implemented handling of leap years in my implementation, but there are two year definitions that I had not taken into account.
 
 - tropical year of approx. `365.2425` days
 - common year of `365` days
 
-I found a nice explanation on [Wikipedia](https://en.wikipedia.org/wiki/Year) and I have updated my implementation to handle this. I also found another [article][SIBE] explaining the difference between a calculated year (calculated) and the the actual year length based on earts revolution around the sun.
+I found a nice explanation on [Wikipedia](https://en.wikipedia.org/wiki/Year) and I have updated my implementation to handle this. I also found another [article][SIBE] explaining the difference between a calculated year (calculated) and the the actual year length based on earts revolution around the sun. [Blog post](https://dev.to/jonasbn/calculating-allowed-downtime-for-human-consumption-a-follow-up-5dni) for the follow up.
 
 A common year is:
 
